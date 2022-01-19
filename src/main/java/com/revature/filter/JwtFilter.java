@@ -55,7 +55,7 @@ public class JwtFilter extends OncePerRequestFilter {
 		// with "Bearer "
 		if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
 
-			token = authorizationHeader.substring(7);
+			token = authorizationHeader.substring(7); // extracting all the values AFTER bearer
 			username = jwtUtil.extractUsername(token);
 		}
 
