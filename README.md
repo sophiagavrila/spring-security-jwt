@@ -1,1 +1,1 @@
-# spring-security-jwt
+# Spring Security JWT Example
