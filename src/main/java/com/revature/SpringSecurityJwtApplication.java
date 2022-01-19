@@ -15,15 +15,15 @@ public class SpringSecurityJwtApplication {
 	 * This is an extra measure against CORS errors.
 	 * https://spring.io/blog/2015/06/08/cors-support-in-spring-framework#spring-boot-integration
 	 */
-//	@Bean
-//	public WebMvcConfigurer corsConfigurer() {
-//		return new WebMvcConfigurer() {
-//			@Override
-//			public void addCorsMappings(CorsRegistry registry) {
-//				registry.addMapping("/*").allowedHeaders("*").allowedOriginPatterns("*").allowedMethods("*").allowCredentials(true);
-//			}
-//		};
-//	}
+	@Bean
+	public WebMvcConfigurer corsConfigurer() {
+		return new WebMvcConfigurer() {
+			@Override
+			public void addCorsMappings(CorsRegistry registry) {
+				registry.addMapping("/*").allowedHeaders("*").allowedOriginPatterns("*").allowedMethods("*")/*.allowCredentials(true)*/;
+			}
+		};
+	}
 	
 	public static void main(String[] args) {
 		SpringApplication.run(SpringSecurityJwtApplication.class, args);

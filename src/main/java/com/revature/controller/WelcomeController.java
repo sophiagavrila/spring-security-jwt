@@ -13,7 +13,6 @@ import com.revature.models.AuthRequest;
 import com.revature.util.JwtUtil;
 
 @RestController
-@CrossOrigin(origins = "*")
 public class WelcomeController {
 
 	@Autowired

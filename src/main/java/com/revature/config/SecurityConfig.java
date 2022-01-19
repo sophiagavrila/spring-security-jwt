@@ -3,6 +3,7 @@ package com.revature.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -61,17 +62,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService);
     }
 
+    /**
+     * WHEN CORS STRIKES! -> https://www.baeldung.com/spring-security-cors-preflight
+     * 
+     * We haven't explicitly excluded the preflight requests from authorization 
+     * in our Spring Security configuration. Remember that Spring Security secures 
+     * all endpoints by default.  As a result, our API expects an authorization token 
+     * in the OPTIONS request as well. Spring provides an out of the box solution to 
+     * exclude OPTIONS requests from authorization checks:
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-    	
-        http.csrf()
-        .disable()
+    	http.cors(); // The cors() method will add the Spring-provided CorsFilter to 
+        http.csrf()  // the application context which in turn bypasses the authorization
+        .disable()   // checks for OPTIONS requests.
         .authorizeRequests()
         .antMatchers("/authenticate")
+        .permitAll().antMatchers(HttpMethod.OPTIONS, "/**")
                 .permitAll().anyRequest().authenticated()
                 .and().exceptionHandling().and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         
-        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);;
+        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
     }
 }
