@@ -13,7 +13,7 @@ import com.revature.models.AuthRequest;
 import com.revature.util.JwtUtil;
 
 @RestController
-public class WelcomeController {
+public class LoginController {
 
 	@Autowired
 	private JwtUtil jwtUtil;
@@ -28,8 +28,8 @@ public class WelcomeController {
 	 * @return
 	 */
 	@GetMapping("/")
-	public String welcome() {
-		return "Hello Spring Security!";
+	public String login() {
+		return "You've successfully logged in!";
 	}
 
 	@PostMapping("/authenticate")
