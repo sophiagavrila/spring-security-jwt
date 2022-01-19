@@ -1,15 +1,18 @@
 package com.revature.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.revature.data.UserRepository;
 import com.revature.models.AuthRequest;
+import com.revature.models.User;
 import com.revature.util.JwtUtil;
 
 @RestController
@@ -17,6 +20,9 @@ public class LoginController {
 
 	@Autowired
 	private JwtUtil jwtUtil;
+	
+	@Autowired
+	private UserRepository userRepository;
 
 	@Autowired
 	private AuthenticationManager authenticationManager;
@@ -47,7 +53,7 @@ public class LoginController {
 			
 		  	
 		} catch (Exception ex) {
-			throw new Exception("inavalid username/password");
+			throw new Exception("invalid username/password");
 		}
 
 		/**
@@ -56,4 +62,5 @@ public class LoginController {
 		 */
 		return jwtUtil.generateToken(authRequest.getUsername());
 	}
+	
 }
